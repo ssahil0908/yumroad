@@ -1,0 +1,39 @@
+{% extends "base_layout.html" %}
+
+{% from "_formhelpers.html" import render_field %}
+
+
+{% block title %} New Product {% endblock %}
+
+{% block content %}
+  <div class="container">
+    <form method="POST">
+      <!-- <label for="name">Name</label>
+      <input type="text" class="form-control" name="name" />
+
+      <label for="description">Description</label>
+      <input type="textarea" class="form-control" name="description" />
+
+      <br />
+      <input type="submit" class="btn btn-primary"/> -->
+
+
+      <!-- {{ form.name.label }}
+        {{ form.name }}
+
+        {{ form.description.label }}
+
+        {{ form.description }}
+        {{ form.submit }} -->
+
+        {{ form.csrf_token }}
+        {{ render_field(form.name) }}
+      {{ render_field(form.description) }}
+      {{ render_field(form.price, placeholder="5.00") }}
+      {{ render_field(form.picture_url, placeholder="https://example.com/image.png") }}
+      <button type="submit" class="btn btn-primary">Create</button>
+
+
+    </form>
+  </div>
+{% endblock %}
