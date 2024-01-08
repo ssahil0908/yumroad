@@ -1,21 +1,21 @@
 {% if stores %}
-    <div class="container">
-        <h3> Example stores </h3>
-        <div class="row mt-3">
+    <div class="container mt-4">
+        <h3 class="text-center mb-4">Explore Example Stores</h3>
+        <div class="row">
             {% for store in stores[0:3] %}
-                <div class="col-sm">
-                    <div class="card">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="{{ store.products[0].primary_image_url }}" class="card-img-top" alt="Store Image">
                         <div class="card-body">
                             <h5 class="card-title">{{ store.name }}</h5>
-
-                            <div class="card-subtitle">
+                            <p class="card-text text-muted">
                                 {{ store.products | count }}
-                                {{  'product' if (store.products | count) == 1 else 'products' }}
-                            </div>
+                                {{ 'product' if store.products | count == 1 else 'products' }}
+                            </p>
                         </div>
                         <div class="card-footer">
-                            <a href="{{ url_for('store.show', store_id=store.id) }}" class="card-link btn btn-primary">
-                                View {{ store.name | title  }}
+                            <a href="{{ url_for('store.show', store_id=store.id) }}" class="btn btn-primary btn-block">
+                                Explore {{ store.name | title }}
                             </a>
                         </div>
                     </div>

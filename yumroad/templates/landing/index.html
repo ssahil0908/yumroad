@@ -5,33 +5,70 @@
     {% assets "landing_css" %}
         <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}" />
     {% endassets %}
+    <style>
+        /* Custom styles */
+        body {
+            background-color: #def12b; /* Light gray background */
+        }
+
+        .header {
+            background-color: #343a40; /* Dark gray header */
+            color: #ffffff; /* White text */
+            padding: 20px;
+            border-bottom: 1px solid #dee2e6; /* Light gray border */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+
+        .cta-button {
+            background-color: #28a745; /* Green button */
+            color: #ffffff; /* White text */
+            transition: background-color 0.3s ease; /* Smooth transition */
+        }
+
+        .cta-button:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+
+        .feature-block {
+            background-color: #ffffff; /* White feature blocks */
+            border: 1px solid #dee2e6; /* Light gray border */
+            border-radius: 5px;
+            margin-bottom: 20px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+    </style>
 {% endblock %}
 
 {% block content %}
-    <div class="row header mt-4 mb-4">
-        <div class="col-sm-12">
-            <div class="header-title">
-                <h1>The easiest way to setup an online store</h1>
-                <div class="header-description mb-4">
-                    Start selling your items in 30 seconds. Free for a limited time.
-                </div>
-                <div class="header-cta">
-                    <a href="{{ url_for('store.index') }}" class="btn btn-primary">Browse Stores</a>
-                    {% if not current_user.is_authenticated %}
-                        <a href="{{ url_for('user.register') }}" class="btn btn-success">Create a store</a>
-                    {% else %}
-                        <a href="{{ url_for('products.create') }}" class="btn btn-success">Create a product</a>
-                    {% endif %}
+    <div class="header mt-4 mb-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="header-title">
+                        <h1 class="display-5">The Easiest Way to Set Up an Online Store</h1>
+                        <div class="header-description lead mb-4">
+                            Start selling your items in 30 seconds. Free for a limited time.
+                        </div>
+                        <div class="header-cta">
+                            <a href="{{ url_for('store.index') }}" class="btn btn-primary cta-button">Browse Stores</a>
+                            {% if not current_user.is_authenticated %}
+                                <a href="{{ url_for('user.register') }}" class="btn btn-success cta-button">Create a Store</a>
+                            {% else %}
+                                <a href="{{ url_for('products.create') }}" class="btn btn-success cta-button">Create a Product</a>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row mb-4">
+    <div class="container mb-4">
         {% include 'landing/_value_prop.html' %}
     </div>
 
-    <div class="row mb-4">
+    <div class="container mb-4">
         {% include 'landing/_featured_stores.html' %}
     </div>
 {% endblock %}

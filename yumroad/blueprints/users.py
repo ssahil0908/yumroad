@@ -37,14 +37,20 @@ def register():
 @user_bp.route('/login', methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
-        flash("You are already logged in","warning")
+        flash("You are already logged in", "warning")
         return redirect(url_for('products.index'))
+
     form = LoginForm()
+
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).one()
-        login_user(user)
-        flash("Logged in successfully.", "success")
-        return redirect(url_for("products.index"))
+        user = User.query.filter_by(email=form.email.data).first()
+
+        if user and user.check_password(form.password.data):
+            login_user(user)
+            flash("Logged in successfully.", "success")
+            return redirect(url_for("products.index"))
+        else:
+            flash("Invalid email or password. Please try again.", "danger")
 
     return render_template("users/login.html", form=form)
 

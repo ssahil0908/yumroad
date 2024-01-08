@@ -2,38 +2,43 @@
 {% block title %} All Products {% endblock %}
 
 {% block content %}
-  <div class="container">
-    <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Product</th>
-            <th scope="col">Name</th>
-            <th scope="col">Store</th>
-            <th scope="col">Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for product in products %}
-            <tr>
-              <th scope="row">
-                <img src="{{ product.primary_image_url }}" alt="Product Image" width="50px" class="img-thumbnail" />
-              </th>
-              <th scope="row">
-                <a href="{{ url_for('products.details', product_id=product.id) }}">
-                    {{ product.name }}
-                </a>
-              </th>
-              <th scope="row">
-                {% if product.store_id %}
-                  <a href="{{ url_for('store.show', store_id=product.store_id) }}" class="card-link btn btn-outline-primary">
-                      {{ product.store.name }}
-                  </a>
-                {% endif %}
-              </th>
-              <th scope="row">{{ product.description }}</th>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-  </div>
+    <div class="container mt-4">
+        <h2 class="mb-3">Explore Our Products</h2>
+        <div class="row">
+            {% for product in products %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="{{ product.primary_image_url }}" alt="Product Image" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="{{ url_for('products.details', product_id=product.id) }}">{{ product.name }}</a>
+                            </h5>
+                            <p class="card-text">{{ product.description }}</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                {% if product.store_id %}
+                                    <strong>Store:</strong>
+                                    <a href="{{ url_for('store.show', store_id=product.store_id) }}">
+                                        {{ product.store.name }}
+                                    </a>
+                                {% else %}
+                                    <span class="badge badge-secondary">No Store</span>
+                                {% endif %}
+                            </li>
+                        </ul>
+                        <div class="card-footer">
+                            <small class="text-muted">
+                                {% if product.price_cents %}
+                                    Price: {{ "${:,.2f}".format(product.price_cents/100.0) }}
+                                {% else %}
+                                    Price not available
+                                {% endif %}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

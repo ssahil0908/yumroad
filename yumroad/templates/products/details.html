@@ -1,32 +1,36 @@
 {% extends "base_layout.html" %}
 
-{% block title %}  {{ product.name }}  {% endblock %}
-
-
+{% block title %} {{ product.name }} {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row mb-2">
-      <div class="col col-12 col-sm-6">
-        <img src="{{ product.primary_image_url }}" alt="Product Image" class="img-fluid img-thumbnail" />
-      </div>
-      <div class="col col-12 col-sm-6">
-        <h1> {{ product.name }} </h1>
-        <hr />
-        <button class="btn btn-primary">
-            {% if product.price_cents %}
-                Buy for {{ "${:,.2f}".format(product.price_cents/100.0) }}
-            {% else %}
-                Price not available
-            {% endif %}
-        </button>
-                  <hr />
-        <span> {{ product.description }} </span>
-        <hr />
-        <a href="{{ url_for('store.show', store_id=product.store.id) }}" class="btn btn-secondary btn-sm">
-          See more products from {{ product.store.name }} </a>
-      </div>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="{{ product.primary_image_url }}" alt="Product Image" class="img-fluid img-thumbnail">
+            </div>
+            <div class="col-md-6">
+                <h1>{{ product.name }}</h1>
+                <hr class="my-4">
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-primary mr-3">
+                        {% if product.price_cents %}
+                            Buy for {{ "${:,.2f}".format(product.price_cents/100.0) }}
+                        {% else %}
+                            Price not available
+                        {% endif %}
+                    </button>
+                    <span class="badge badge-info">
+                        {{ product.store.name }}
+                    </span>
+                </div>
+                <hr class="my-4">
+                <p>{{ product.description }}</p>
+                <hr class="my-4">
+                <a href="{{ url_for('store.show', store_id=product.store.id) }}"
+                   class="btn btn-secondary btn-sm">
+                    See more products from {{ product.store.name }}
+                </a>
+            </div>
+        </div>
     </div>
-  </div>
 {% endblock %}
-

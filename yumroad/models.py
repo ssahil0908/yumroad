@@ -1,6 +1,6 @@
 from sqlalchemy.orm import validates
 from flask_login import UserMixin
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash , check_password_hash
 
 from yumroad.extensions import db
 
@@ -19,6 +19,9 @@ class User(UserMixin, db.Model):
             raise ValueError('email and password are required')
         hashed_password = generate_password_hash(password)
         return User(email=email.lower().strip(), password=hashed_password)
+    
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
 
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
